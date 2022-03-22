@@ -18,8 +18,5 @@ module.exports = {
     sourceType: "module",
   },
   plugins: ["react", "react-hooks", "@typescript-eslint"],
-  rules: {
-    quotes: ["error", "double"],
-    semi: ["error", "never"],
-  },
+  rules: {},
 }
