@@ -1,13 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { MantineProvider } from "@mantine/core"
+import { Providers } from "./contexts"
 import { App } from "./App"
 
 ReactDOM.render(
   <React.StrictMode>
-    <MantineProvider withNormalizeCSS>
+    <Providers>
       <App />
-    </MantineProvider>
+    </Providers>
   </React.StrictMode>,
   document.getElementById("root")
 )
