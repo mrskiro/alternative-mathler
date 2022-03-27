@@ -1,48 +1,51 @@
 import * as React from "react"
 import {
-  createStyles,
-  Header as MantineHeader,
-  Text,
-  ActionIcon,
-  useMantineColorScheme,
-  useMantineTheme,
-} from "@mantine/core"
-import { Sun, MoonStars } from "tabler-icons-react"
+  Flex,
+  Heading,
+  Icon,
+  useColorMode,
+  IconButton,
+  Link,
+  useColorModeValue,
+} from "@chakra-ui/react"
+import { SunIcon, MoonIcon } from "@chakra-ui/icons"
+import { GithubIcon } from "./GithubIcon"
 
 export const Header: React.VFC = () => {
-  const { classes } = useStyles()
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
-
-  const theme = useMantineTheme()
-  const isDark = colorScheme === "dark"
+  const { toggleColorMode } = useColorMode()
+  const SwitchIcon = useColorModeValue(SunIcon, MoonIcon)
 
   return (
-    <MantineHeader height={60} className={classes.header} px="md">
-      <div></div>
-      <Text
-        component="h1"
-        color={isDark ? theme.white : theme.black}
-        weight={500}
-        size="xl"
-        variant="text"
-      >
-        alternative mathler
-      </Text>
-      <ActionIcon
-        variant="default"
-        onClick={() => toggleColorScheme()}
-        color={isDark ? "yellow" : "blue"}
-      >
-        {isDark ? <Sun size={16} /> : <MoonStars size={16} />}
-      </ActionIcon>
-    </MantineHeader>
+    <Flex as="header" h="60px" align="center" justify="center" px="24px">
+      <Flex w={"30%"} align="center" justify="space-between">
+        <Link
+          display="flex"
+          isExternal
+          aria-label="Go to GitHub page"
+          href="https://github.com/purp1eeeee/alternative-mathler"
+        >
+          <Icon
+            as={GithubIcon}
+            transition="color 0.2s"
+            w="16px"
+            h="16px"
+            _hover={{ color: "gray.600" }}
+          />
+        </Link>
+        <Heading as="h1" fontSize="20px">
+          alternative mathler
+        </Heading>
+        <IconButton
+          w="16px"
+          minW="16px"
+          h="16px"
+          aria-label="swich theme"
+          variant="ghost"
+          color="current"
+          onClick={toggleColorMode}
+          icon={<SwitchIcon />}
+        />
+      </Flex>
+    </Flex>
   )
 }
-
-const useStyles = createStyles(() => ({
-  header: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-}))
