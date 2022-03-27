@@ -16,7 +16,7 @@ export const Header: React.VFC = () => {
   const SwitchIcon = useColorModeValue(SunIcon, MoonIcon)
 
   return (
-    <Flex as="header" h="60px" align="center" justify="center" px="24px">
+    <Flex as="header" w="100%" h="40px" align="center" justify="center">
       <Flex w={"30%"} align="center" justify="space-between">
         <Link
           display="flex"
