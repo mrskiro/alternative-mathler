@@ -65,7 +65,7 @@ export const App = () => {
   const isMatchValue = (rowIndex: number, v: Value | null) => {
     if (v === null) return false
     if (!isAnswer(rowIndex)) return false
-    return state[rowIndex].some((col) => col === v)
+    return resultAnswers.some((col) => col === v)
   }
 
   const isMatchValueAndPosition = (
@@ -75,8 +75,7 @@ export const App = () => {
   ) => {
     if (v === null) return false
     if (!isAnswer(rowIndex)) return false
-
-    return state[rowIndex][colIndex] === v
+    return resultAnswers[colIndex] === v
   }
 
   return (
