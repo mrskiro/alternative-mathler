@@ -1,5 +1,5 @@
 import * as React from "react"
-import { VStack, HStack, Text } from "@chakra-ui/react"
+import { VStack, HStack, Text, useToast } from "@chakra-ui/react"
 import { Header } from "./components/Header"
 import {
   getDesireNumber,
@@ -14,14 +14,16 @@ import { Cell } from "./components/Cell"
 const desireValue = getDesireNumber()
 const resultAnswers = getResultAnswers(desireValue)
 
-const initialState = [...Array(config.rows)].map((_) =>
-  [...Array(config.cols)].map((_) => null)
+const initialState = [...Array(config.rows)].map(() =>
+  [...Array(config.cols)].map(() => null)
 )
 
 export const App = () => {
   const [state, setState] = React.useState<(Value | null)[][]>(initialState)
   const [currentRowIndex, setCurrentRowIndex] = React.useState(0)
   const [currentColIndex, setCurrentColIndex] = React.useState(0)
+
+  const toast = useToast({ position: "top" })
 
   const onClickInput = (v: Value) => () => {
     if (currentColIndex === config.cols) return
@@ -51,12 +53,38 @@ export const App = () => {
     setCurrentColIndex((old) => old - 1)
   }
   const onClickEnter = () => {
-    if (currentColIndex !== config.cols) return
-    if (
-      Function(`return ${state[currentRowIndex].join("")}`)() === desireValue
-    ) {
-      setCurrentRowIndex((old) => old + 1)
-      setCurrentColIndex(0)
+    if (currentColIndex !== config.cols) {
+      toast({
+        status: "error",
+        title: "Not enough numbers",
+        containerStyle: {
+          marginTop: "120px",
+        },
+      })
+      return
+    }
+    try {
+      if (
+        Function(`return ${state[currentRowIndex].join("")}`)() === desireValue
+      ) {
+        if (state[currentRowIndex].join("") === resultAnswers.join("")) {
+          toast({
+            status: "success",
+            title: "clear!!!",
+          })
+          return
+        }
+        setCurrentRowIndex((old) => old + 1)
+        setCurrentColIndex(0)
+      } else {
+        toast({
+          title: `Every guess must equal ${desireValue} ... are you forgetting order of operations?`,
+        })
+      }
+    } catch (_) {
+      toast({
+        title: "error",
+      })
     }
   }
 

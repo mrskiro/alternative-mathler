@@ -80,12 +80,14 @@ const generateValues = (length: number): Cols => {
   const values: Cols = []
   for (let i = 0; i < length; i++) {
     switch (i) {
+      //最初と最後は記号にはならない
       case 0:
       case length - 1:
         values[i] = getRandomOneToNine()
         continue
       default:
         const prev = values[i - 1]
+        // 記号は連続させない
         if (isSign(prev)) {
           values[i] = getRandomOneToNine()
           continue
